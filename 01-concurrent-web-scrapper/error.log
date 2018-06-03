@@ -1,0 +1,1286 @@
+fatal error: concurrent map writes
+
+goroutine 4 [running]:
+runtime.throw(0x68a84b, 0x15)
+	/usr/lib/golang/src/runtime/panic.go:616 +0x81 fp=0xc420075e38 sp=0xc420075e18 pc=0x42a4a1
+runtime.mapassign_faststr(0x636780, 0xc4200a6ed0, 0xc42035b700, 0x3e, 0x810740)
+	/usr/lib/golang/src/runtime/hashmap_fast.go:703 +0x3e9 fp=0xc420075ea8 sp=0xc420075e38 pc=0x40c9c9
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162000)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:122 +0x32f fp=0xc420075fd0 sp=0xc420075ea8 pc=0x5f95af
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_amd64.s:2361 +0x1 fp=0xc420075fd8 sp=0xc420075fd0 pc=0x455aa1
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 1 [runnable]:
+os.(*File).Write(0xc4200b0008, 0xc4203aa2a0, 0x38, 0x60, 0x10, 0xc4204127a0, 0x0)
+	/usr/lib/golang/src/os/file.go:140 +0x2db
+fmt.Fprintln(0x6b6a20, 0xc4200b0008, 0xc420061eb8, 0x1, 0x1, 0x623960, 0xc420422c01, 0xc4204127a0)
+	/usr/lib/golang/src/fmt/print.go:255 +0x8b
+fmt.Println(0xc420061eb8, 0x1, 0x1, 0xc4204127a0, 0x0, 0x0)
+	/usr/lib/golang/src/fmt/print.go:264 +0x57
+main.main()
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:52 +0x329
+
+goroutine 20 [chan receive]:
+main.(*Scraper).Run.func1(0x6b90c0, 0xc4200be120, 0xc42012c2c0, 0xc4200be1e0)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:79 +0x55
+created by main.(*Scraper).Run
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:72 +0x132
+
+goroutine 54 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420322300, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322300, 0x471200, 0x46fcdf, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322300, 0xc42005c888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322300, 0xc420452870, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322300, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322300, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba0b8, 0xf8, 0xc42005cc78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322300, 0x0, 0x0, 0x0, 0xc4201ba0b8, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322300, 0xc420452870, 0x2c, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420452870, 0x2c, 0x5, 0xc420438220, 0xc420373110)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420452870, 0x2c, 0x2c, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162500)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 55 [chan send]:
+main.(*Scraper).visit(0xc42012c2c0, 0xc42031c000)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:123 +0x360
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 52 [IO wait]:
+internal/poll.runtime_pollWait(0x7fbd32aa5f00, 0x72, 0xc4204cc858)
+	/usr/lib/golang/src/runtime/netpoll.go:173 +0x57
+internal/poll.(*pollDesc).wait(0xc420166498, 0x72, 0xffffffffffffff00, 0x6b72c0, 0x7bc3e8)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:85 +0x9b
+internal/poll.(*pollDesc).waitRead(0xc420166498, 0xc4202c8000, 0x800, 0x800)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:90 +0x3d
+internal/poll.(*FD).Read(0xc420166480, 0xc4202c8000, 0x800, 0x800, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/internal/poll/fd_unix.go:157 +0x17d
+net.(*netFD).Read(0xc420166480, 0xc4202c8000, 0x800, 0x800, 0x8, 0x8, 0x7f3)
+	/usr/lib/golang/src/net/fd_unix.go:202 +0x4f
+net.(*conn).Read(0xc4201ba010, 0xc4202c8000, 0x800, 0x800, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/net.go:176 +0x6a
+crypto/tls.(*block).readFromUntil(0xc4201bc420, 0x7fbd32a21040, 0xc4201ba010, 0x5, 0xc4201ba010, 0x0)
+	/usr/lib/golang/src/crypto/tls/conn.go:493 +0x96
+crypto/tls.(*Conn).readRecord(0xc4201d4000, 0x699917, 0xc4201d4120, 0x0)
+	/usr/lib/golang/src/crypto/tls/conn.go:595 +0xe0
+crypto/tls.(*Conn).Read(0xc4201d4000, 0xc420273000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/crypto/tls/conn.go:1156 +0x100
+bufio.(*Reader).Read(0xc4201b4240, 0xc420406498, 0x9, 0x9, 0xc4204ccc50, 0x468473, 0xc4204ccc60)
+	/usr/lib/golang/src/bufio/bufio.go:216 +0x238
+io.ReadAtLeast(0x6b65c0, 0xc4201b4240, 0xc420406498, 0x9, 0x9, 0x9, 0xc4203da401, 0xc4204ccd00, 0x5cf8db)
+	/usr/lib/golang/src/io/io.go:309 +0x86
+io.ReadFull(0x6b65c0, 0xc4201b4240, 0xc420406498, 0x9, 0x9, 0xc4200a2050, 0xc4204ccd30, 0x5cf7ed)
+	/usr/lib/golang/src/io/io.go:327 +0x58
+net/http.http2readFrameHeader(0xc420406498, 0x9, 0x9, 0x6b65c0, 0xc4201b4240, 0x0, 0x0, 0xc4205698c0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:1517 +0x7b
+net/http.(*http2Framer).ReadFrame(0xc420406460, 0xc4205698c0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:1775 +0xa4
+net/http.(*http2clientConnReadLoop).run(0xc4204ccfb8, 0x699420, 0xc42049e7b8)
+	/usr/lib/golang/src/net/http/h2_bundle.go:8028 +0x90
+net/http.(*http2ClientConn).readLoop(0xc4203b2a80)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7956 +0x68
+created by net/http.(*http2Transport).newClientConn
+	/usr/lib/golang/src/net/http/h2_bundle.go:7143 +0x65c
+
+goroutine 53 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420322200, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322200, 0x471200, 0x46fcdf, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322200, 0xc42005c888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322200, 0xc420437580, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322200, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322200, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba090, 0xf8, 0xc42005cc78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322200, 0x0, 0x0, 0x0, 0xc4201ba090, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322200, 0xc420437580, 0x20, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420437580, 0x20, 0x3, 0xc420438200, 0xc420372f50)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420437580, 0x20, 0x20, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162380)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 16 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc42016a200, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc42016a200, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc42016a200, 0xc4204c8888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc42016a200, 0xc420404020, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc42016a200, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc42016a200, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4200b0030, 0xf8, 0xc4204c8c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc42016a200, 0x0, 0x0, 0x0, 0xc4200b0030, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc42016a200, 0xc420404020, 0x1c, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420404020, 0x1c, 0x0, 0x0, 0xc4202e0000)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420404020, 0x1c, 0x1c, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162100)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 24 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420322000, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322000, 0x471200, 0x46fcdf, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322000, 0xc42005c888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322000, 0xc4204527e0, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322000, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322000, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba040, 0xf8, 0xc42005cc78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322000, 0x0, 0x0, 0x0, 0xc4201ba040, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322000, 0xc4204527e0, 0x21, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4204527e0, 0x21, 0x4, 0xc4204381d0, 0xc420372d20)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4204527e0, 0x21, 0x21, 0x0, 0xc4201fb300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162180)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 37 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420392000, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420392000, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420392000, 0xc420186888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420392000, 0xc4201d0060, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420392000, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420392000, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc42000e040, 0xf8, 0xc420186c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420392000, 0x0, 0x0, 0x0, 0xc42000e040, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420392000, 0xc4201d0060, 0x23, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4201d0060, 0x23, 0x6, 0xc4204381d4, 0xc42036a150)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4201d0060, 0x23, 0x23, 0x2, 0x5)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162200)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 66 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420392100, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420392100, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420392100, 0xc420186888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420392100, 0xc4201d0090, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420392100, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420392100, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc42000e068, 0xf8, 0xc420186c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420392100, 0x0, 0x0, 0x0, 0xc42000e068, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420392100, 0xc4201d0090, 0x28, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4201d0090, 0x28, 0xb, 0xc4204381e0, 0xc42036a1c0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4201d0090, 0x28, 0x28, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162280)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 38 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420322100, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322100, 0x471200, 0x46fcdf, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322100, 0xc42005c888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322100, 0xc420452810, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322100, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322100, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba068, 0xf8, 0xc42005cc78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322100, 0x0, 0x0, 0x0, 0xc4201ba068, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322100, 0xc420452810, 0x21, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420452810, 0x21, 0x4, 0xc4204381dc, 0xc420372d90)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420452810, 0x21, 0x21, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162300)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 67 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420392200, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420392200, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420392200, 0xc420186888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420392200, 0xc4201d00c0, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420392200, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420392200, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc42000e090, 0xf8, 0xc420186c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420392200, 0x0, 0x0, 0x0, 0xc42000e090, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420392200, 0xc4201d00c0, 0x21, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4201d00c0, 0x21, 0x4, 0xc420438204, 0xc42036a380)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4201d00c0, 0x21, 0x21, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162400)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 68 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc42016a300, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc42016a300, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc42016a300, 0xc4204c8888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc42016a300, 0xc4200ae330, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc42016a300, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc42016a300, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4200b0058, 0xf8, 0xc4204c8c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc42016a300, 0x0, 0x0, 0x0, 0xc4200b0058, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc42016a300, 0xc4200ae330, 0x23, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4200ae330, 0x23, 0x6, 0xc420438208, 0xc4202e04d0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4200ae330, 0x23, 0x23, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162480)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 39 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420322400, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322400, 0x471200, 0x46fcdf, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322400, 0xc42005c888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322400, 0xc42035a8c0, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322400, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322400, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba0e0, 0xf8, 0xc42005cc78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322400, 0x0, 0x0, 0x0, 0xc4201ba0e0, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322400, 0xc42035a8c0, 0x3e, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc42035a8c0, 0x3e, 0x4, 0xc4204527b0, 0xc420373180)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc42035a8c0, 0x3e, 0x3e, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162580)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 79 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420336100, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420336100, 0xc420062800, 0x443aff, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420336100, 0xc420062888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420336100, 0xc4202da1c0, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420336100, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420336100, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc420338040, 0xf8, 0xc420062c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420336100, 0x0, 0x0, 0x0, 0xc420338040, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420336100, 0xc4202da1c0, 0x3e, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4202da1c0, 0x3e, 0x4, 0xc4201d0120, 0xc420276690)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4202da1c0, 0x3e, 0x3e, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420366300)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 80 [select]:
+net/http.(*persistConn).roundTrip(0xc42022a000, 0xc4200a75c0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:2033 +0x5a7
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420336200, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:422 +0x8f2
+net/http.send(0xc420336200, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc420338070, 0xf8, 0xc420063c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420336200, 0x0, 0x0, 0x0, 0xc420338070, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420336200, 0xc4202da200, 0x31, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4202da200, 0x31, 0x20, 0xc42035a951, 0xc420276700)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4202da200, 0x31, 0x31, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162980)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 72 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420322700, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322700, 0xc42005d800, 0x443aff, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322700, 0xc42005d888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322700, 0xc42035ab40, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322700, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322700, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba168, 0xf8, 0xc42005dc78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322700, 0x0, 0x0, 0x0, 0xc4201ba168, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322700, 0xc42035ab40, 0x37, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc42035ab40, 0x37, 0x4, 0xc4203e0020, 0xc4203736c0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc42035ab40, 0x37, 0x37, 0x8, 0xc4200100c0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420366000)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 60 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc42016a500, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc42016a500, 0x6b6b00, 0xc4204048e0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc42016a500, 0xc42005c888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc42016a500, 0xc4200ae390, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc42016a500, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc42016a500, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4200b00d0, 0xf8, 0xc42005cc78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc42016a500, 0x0, 0x0, 0x0, 0xc4200b00d0, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc42016a500, 0xc4200ae390, 0x2d, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4200ae390, 0x2d, 0x4, 0xc42042a190, 0xc4202e0770)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4200ae390, 0x2d, 0x2d, 0x8, 0xc4200100c0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc42031c180)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 69 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420322600, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322600, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322600, 0xc42005e888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322600, 0xc42035aa40, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322600, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322600, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba140, 0xf8, 0xc42005ec78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322600, 0x0, 0x0, 0x0, 0xc4201ba140, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322600, 0xc42035aa40, 0x32, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc42035aa40, 0x32, 0x4, 0xc4204222e0, 0xc420373420)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc42035aa40, 0x32, 0x32, 0x8, 0xc4200100c0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc42031c080)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 70 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc42016a400, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc42016a400, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc42016a400, 0xc4204c9888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc42016a400, 0xc4200ae360, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc42016a400, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc42016a400, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4200b0088, 0xf8, 0xc4204c9c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc42016a400, 0x0, 0x0, 0x0, 0xc4200b0088, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc42016a400, 0xc4200ae360, 0x29, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4200ae360, 0x29, 0x4, 0xc42042a180, 0xc4202e0700)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4200ae360, 0x29, 0x29, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc42031c100)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 61 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420392300, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420392300, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420392300, 0xc420186888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420392300, 0xc4202041c0, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420392300, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420392300, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc42000e0b8, 0xf8, 0xc420186c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420392300, 0x0, 0x0, 0x0, 0xc42000e0b8, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420392300, 0xc4202041c0, 0x3e, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4202041c0, 0x3e, 0x4, 0xc4200ae210, 0xc42036a5b0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4202041c0, 0x3e, 0x3e, 0x8, 0xc4200100c0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420166180)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 73 [semacquire]:
+sync.runtime_notifyListWait(0xc4201faa40, 0xc400000002)
+	/usr/lib/golang/src/runtime/sema.go:510 +0x10b
+sync.(*Cond).Wait(0xc4201faa30)
+	/usr/lib/golang/src/sync/cond.go:56 +0x80
+net/http.(*http2pipe).Read(0xc4201faa28, 0xc4205af000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:3641 +0x8f
+net/http.http2transportResponseBody.Read(0xc4201faa00, 0xc4205af000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:8290 +0xa1
+bufio.(*Reader).fill(0xc420572cc0)
+	/usr/lib/golang/src/bufio/bufio.go:100 +0x11e
+bufio.(*Reader).ReadByte(0xc420572cc0, 0x1, 0x0, 0x0)
+	/usr/lib/golang/src/bufio/bufio.go:242 +0x39
+compress/flate.(*decompressor).moreBits(0xc4205b4000, 0x0, 0x0)
+	/usr/lib/golang/src/compress/flate/inflate.go:694 +0x37
+compress/flate.(*decompressor).huffSym(0xc4205b4000, 0xc4205b4028, 0x3, 0x0, 0x0)
+	/usr/lib/golang/src/compress/flate/inflate.go:716 +0x4f
+compress/flate.(*decompressor).huffmanBlock(0xc4205b4000)
+	/usr/lib/golang/src/compress/flate/inflate.go:494 +0xf3
+compress/flate.(*decompressor).nextBlock(0xc4205b4000)
+	/usr/lib/golang/src/compress/flate/inflate.go:327 +0x1a1
+compress/flate.(*decompressor).Read(0xc4205b4000, 0xc4205ae000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/compress/flate/inflate.go:347 +0x72
+compress/gzip.(*Reader).Read(0xc4205a8580, 0xc4205ae000, 0x1000, 0x1000, 0x0, 0x7fbd32af2b20, 0x0)
+	/usr/lib/golang/src/compress/gzip/gunzip.go:251 +0x96
+net/http.(*http2gzipReader).Read(0xc4205696b0, 0xc4205ae000, 0x1000, 0x1000, 0x7fbd32af1d01, 0xc4201de5b0, 0xc4204dfe60)
+	/usr/lib/golang/src/net/http/h2_bundle.go:8760 +0x73
+github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/vendor/golang.org/x/net/html.readAtLeastOneByte(0x7fbd32aaa110, 0xc4205696b0, 0xc4205ae000, 0x1000, 0x1000, 0x1000, 0x0, 0x0)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/vendor/golang.org/x/net/html/token.go:299 +0x6b
+github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/vendor/golang.org/x/net/html.(*Tokenizer).readByte(0xc4201de5b0, 0xc4201de5b0)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/vendor/golang.org/x/net/html/token.go:273 +0x272
+github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/vendor/golang.org/x/net/html.(*Tokenizer).Next(0xc4201de5b0, 0xc4205696b0)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/vendor/golang.org/x/net/html/token.go:980 +0xda
+main.(*Scraper).visit(0xc42012c2c0, 0xc420366180)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:100 +0xf6
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 99 [IO wait]:
+internal/poll.runtime_pollWait(0x7fbd32aa5af0, 0x77, 0xc4204ba900)
+	/usr/lib/golang/src/runtime/netpoll.go:173 +0x57
+internal/poll.(*pollDesc).wait(0xc420367018, 0x77, 0xc420585300, 0xc420585368, 0x4336e4)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:85 +0x9b
+internal/poll.(*pollDesc).waitWrite(0xc420367018, 0xc420585300, 0x28, 0x5269e6)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:94 +0x3d
+internal/poll.(*FD).WaitWrite(0xc420367000, 0x6992c8, 0x6b90c0)
+	/usr/lib/golang/src/internal/poll/fd_unix.go:440 +0x37
+net.(*netFD).connect(0xc420367000, 0x6b90c0, 0xc4203a5260, 0x0, 0x0, 0x6b6b00, 0xc4203e1320, 0x0, 0x0, 0x0, ...)
+	/usr/lib/golang/src/net/fd_unix.go:152 +0x299
+net.(*netFD).dial(0xc420367000, 0x6b90c0, 0xc4203a5260, 0x6b9860, 0x0, 0x6b9860, 0xc420588120, 0xc420585588, 0x53878e)
+	/usr/lib/golang/src/net/sock_posix.go:142 +0xe9
+net.socket(0x6b90c0, 0xc4203a5260, 0x681bf2, 0x3, 0x2, 0x1, 0x0, 0x0, 0x6b9860, 0x0, ...)
+	/usr/lib/golang/src/net/sock_posix.go:93 +0x1a6
+net.internetSocket(0x6b90c0, 0xc4203a5260, 0x681bf2, 0x3, 0x6b9860, 0x0, 0x6b9860, 0xc420588120, 0x1, 0x0, ...)
+	/usr/lib/golang/src/net/ipsock_posix.go:141 +0x129
+net.doDialTCP(0x6b90c0, 0xc4203a5260, 0x681bf2, 0x3, 0x0, 0xc420588120, 0x80fa78, 0x0, 0x0)
+	/usr/lib/golang/src/net/tcpsock_posix.go:62 +0xb9
+net.dialTCP(0x6b90c0, 0xc4203a5260, 0x681bf2, 0x3, 0x0, 0xc420588120, 0x72262a961, 0x7f2340, 0x6fa9b7f9b)
+	/usr/lib/golang/src/net/tcpsock_posix.go:58 +0xe4
+net.dialSingle(0x6b90c0, 0xc4203a5260, 0xc420366f80, 0x6b7ce0, 0xc420588120, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/dial.go:547 +0x375
+net.dialSerial(0x6b90c0, 0xc4203a5260, 0xc420366f80, 0xc420412530, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/dial.go:515 +0x22d
+net.(*Dialer).DialContext(0xc4200be0c0, 0x6b9080, 0xc4200ac010, 0x681bf2, 0x3, 0xc4203e0b00, 0x1c, 0x0, 0x0, 0x0, ...)
+	/usr/lib/golang/src/net/dial.go:397 +0x678
+net.(*Dialer).DialContext-fm(0x6b9080, 0xc4200ac010, 0x681bf2, 0x3, 0xc4203e0b00, 0x1c, 0x404ce6, 0x59dcb9, 0xc4200ac010, 0x637d40)
+	/usr/lib/golang/src/net/http/transport.go:46 +0x73
+net/http.(*Transport).dial(0x7ed440, 0x6b9080, 0xc4200ac010, 0x681bf2, 0x3, 0xc4203e0b00, 0x1c, 0x0, 0x0, 0x80, ...)
+	/usr/lib/golang/src/net/http/transport.go:898 +0x20d
+net/http.(*Transport).dialConn(0x7ed440, 0x6b9080, 0xc4200ac010, 0x0, 0xc420204580, 0x5, 0xc4203e0b00, 0x1c, 0x0, 0xc42049b7c0, ...)
+	/usr/lib/golang/src/net/http/transport.go:1143 +0x317
+net/http.(*Transport).getConn.func4(0x7ed440, 0x6b9080, 0xc4200ac010, 0xc4200dba10, 0xc4203aac00)
+	/usr/lib/golang/src/net/http/transport.go:957 +0x78
+created by net/http.(*Transport).getConn
+	/usr/lib/golang/src/net/http/transport.go:956 +0x363
+
+goroutine 103 [select]:
+net.(*netFD).connect.func2(0x6b90c0, 0xc4203a5260, 0xc420367000, 0xc4203ab080, 0xc4203ab020)
+	/usr/lib/golang/src/net/fd_unix.go:129 +0xde
+created by net.(*netFD).connect
+	/usr/lib/golang/src/net/fd_unix.go:128 +0x286
+
+goroutine 76 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc42016a900, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc42016a900, 0xc4204baa00, 0xc420187848, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc42016a900, 0xc420187888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc42016a900, 0xc4203ccc40, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc42016a900, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc42016a900, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4200b0158, 0xf8, 0xc420187c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc42016a900, 0x0, 0x0, 0x0, 0xc4200b0158, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc42016a900, 0xc4203ccc40, 0x37, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4203ccc40, 0x37, 0x4, 0xc420437640, 0xc4202e1030)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4203ccc40, 0x37, 0x37, 0x8, 0xc4201ae180)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162800)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 62 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420336500, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420336500, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420336500, 0xc420183888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420336500, 0xc4202da2c0, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420336500, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420336500, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4203380f8, 0xf8, 0xc420183c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420336500, 0x0, 0x0, 0x0, 0xc4203380f8, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420336500, 0xc4202da2c0, 0x37, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4202da2c0, 0x37, 0x4, 0xc420404a00, 0xc420276850)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4202da2c0, 0x37, 0x37, 0x8, 0xc4201ae000)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420166a80)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 45 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc42016a600, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc42016a600, 0xc420404600, 0x17, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc42016a600, 0xc4204c8888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc42016a600, 0xc4203cc400, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc42016a600, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc42016a600, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4200b0100, 0xf8, 0xc4204c8c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc42016a600, 0x0, 0x0, 0x0, 0xc4200b0100, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc42016a600, 0xc4203cc400, 0x36, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4203cc400, 0x36, 0x4, 0xc420437540, 0xc4202e0af0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4203cc400, 0x36, 0x36, 0x8, 0xc420010480)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162700)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 46 [chan send]:
+main.(*Scraper).visit(0xc42012c2c0, 0xc420166200)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:123 +0x360
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 74 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc42016a800, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc42016a800, 0x559800, 0xc4204e780a, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc42016a800, 0xc420186888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc42016a800, 0xc4200ae960, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc42016a800, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc42016a800, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4200b0130, 0xf8, 0xc420186c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc42016a800, 0x0, 0x0, 0x0, 0xc4200b0130, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc42016a800, 0xc4200ae960, 0x2d, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4200ae960, 0x2d, 0x4, 0xc4204100d0, 0xc4202e0e70)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4200ae960, 0x2d, 0x2d, 0x8, 0xc420010480)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420166280)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 78 [IO wait]:
+internal/poll.runtime_pollWait(0x7fbd32aa5d60, 0x72, 0xc4204cd858)
+	/usr/lib/golang/src/runtime/netpoll.go:173 +0x57
+internal/poll.(*pollDesc).wait(0xc420166998, 0x72, 0xffffffffffffff00, 0x6b72c0, 0x7bc3e8)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:85 +0x9b
+internal/poll.(*pollDesc).waitRead(0xc420166998, 0xc4205d3000, 0x4f58, 0x4f58)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:90 +0x3d
+internal/poll.(*FD).Read(0xc420166980, 0xc4205d30a8, 0x4f58, 0x4f58, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/internal/poll/fd_unix.go:157 +0x17d
+net.(*netFD).Read(0xc420166980, 0xc4205d30a8, 0x4f58, 0x4f58, 0x568, 0x0, 0x0)
+	/usr/lib/golang/src/net/fd_unix.go:202 +0x4f
+net.(*conn).Read(0xc42000e0c8, 0xc4205d30a8, 0x4f58, 0x4f58, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/net.go:176 +0x6a
+crypto/tls.(*block).readFromUntil(0xc4200da690, 0x7fbd32a21040, 0xc42000e0c8, 0x401d, 0xc42000e0c8, 0x0)
+	/usr/lib/golang/src/crypto/tls/conn.go:493 +0x96
+crypto/tls.(*Conn).readRecord(0xc4203ec000, 0x699917, 0xc4203ec120, 0xc4205680f0)
+	/usr/lib/golang/src/crypto/tls/conn.go:640 +0x1fa
+crypto/tls.(*Conn).Read(0xc4203ec000, 0xc420421000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/crypto/tls/conn.go:1156 +0x100
+bufio.(*Reader).Read(0xc420081320, 0xc420398818, 0x9, 0x9, 0xc4204cdc50, 0x468473, 0xc4204cdc60)
+	/usr/lib/golang/src/bufio/bufio.go:216 +0x238
+io.ReadAtLeast(0x6b65c0, 0xc420081320, 0xc420398818, 0x9, 0x9, 0x9, 0xc4203da001, 0xc4204cdd00, 0x5cf8db)
+	/usr/lib/golang/src/io/io.go:309 +0x86
+io.ReadFull(0x6b65c0, 0xc420081320, 0xc420398818, 0x9, 0x9, 0xc4200a2050, 0xc4204cdd30, 0x5cf7ed)
+	/usr/lib/golang/src/io/io.go:327 +0x58
+net/http.http2readFrameHeader(0xc420398818, 0x9, 0x9, 0x6b65c0, 0xc420081320, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:1517 +0x7b
+net/http.(*http2Framer).ReadFrame(0xc4203987e0, 0xc4205680c0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:1775 +0xa4
+net/http.(*http2clientConnReadLoop).run(0xc4204cdfb8, 0x699420, 0xc42049a7b8)
+	/usr/lib/golang/src/net/http/h2_bundle.go:8028 +0x90
+net/http.(*http2ClientConn).readLoop(0xc4203121c0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7956 +0x68
+created by net/http.(*http2Transport).newClientConn
+	/usr/lib/golang/src/net/http/h2_bundle.go:7143 +0x65c
+
+goroutine 33 [IO wait]:
+internal/poll.runtime_pollWait(0x7fbd32aa5bc0, 0x72, 0xc4201859a8)
+	/usr/lib/golang/src/runtime/netpoll.go:173 +0x57
+internal/poll.(*pollDesc).wait(0xc420366a18, 0x72, 0xffffffffffffff00, 0x6b72c0, 0x7bc3e8)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:85 +0x9b
+internal/poll.(*pollDesc).waitRead(0xc420366a18, 0xc420598000, 0x1000, 0x1000)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:90 +0x3d
+internal/poll.(*FD).Read(0xc420366a00, 0xc420598000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/internal/poll/fd_unix.go:157 +0x17d
+net.(*netFD).Read(0xc420366a00, 0xc420598000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/fd_unix.go:202 +0x4f
+net.(*conn).Read(0xc420338160, 0xc420598000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/net.go:176 +0x6a
+net/http.(*persistConn).Read(0xc42022a000, 0xc420598000, 0x1000, 0x1000, 0x404ce6, 0xc420185b98, 0x428fb9)
+	/usr/lib/golang/src/net/http/transport.go:1453 +0x136
+bufio.(*Reader).fill(0xc4200bf5c0)
+	/usr/lib/golang/src/bufio/bufio.go:100 +0x11e
+bufio.(*Reader).Peek(0xc4200bf5c0, 0x1, 0xc420098ba0, 0xc42049bc80, 0xc42049bc60, 0x54973c, 0x66ee00)
+	/usr/lib/golang/src/bufio/bufio.go:132 +0x3a
+net/http.(*persistConn).readLoop(0xc42022a000)
+	/usr/lib/golang/src/net/http/transport.go:1601 +0x185
+created by net/http.(*Transport).dialConn
+	/usr/lib/golang/src/net/http/transport.go:1237 +0x95a
+
+goroutine 98 [IO wait]:
+internal/poll.runtime_pollWait(0x7fbd32aa5c90, 0x72, 0xc420183858)
+	/usr/lib/golang/src/runtime/netpoll.go:173 +0x57
+internal/poll.(*pollDesc).wait(0xc420167218, 0x72, 0xffffffffffffff00, 0x6b72c0, 0x7bc3e8)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:85 +0x9b
+internal/poll.(*pollDesc).waitRead(0xc420167218, 0xc420480000, 0x1000, 0x1000)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:90 +0x3d
+internal/poll.(*FD).Read(0xc420167200, 0xc420480000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/internal/poll/fd_unix.go:157 +0x17d
+net.(*netFD).Read(0xc420167200, 0xc420480000, 0x1000, 0x1000, 0x0, 0x8, 0xff3)
+	/usr/lib/golang/src/net/fd_unix.go:202 +0x4f
+net.(*conn).Read(0xc420338050, 0xc420480000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/net.go:176 +0x6a
+crypto/tls.(*block).readFromUntil(0xc420169410, 0x7fbd32a21040, 0xc420338050, 0x5, 0xc420338050, 0xc4203fc8a0)
+	/usr/lib/golang/src/crypto/tls/conn.go:493 +0x96
+crypto/tls.(*Conn).readRecord(0xc4201d4a80, 0x699917, 0xc4201d4ba0, 0xc420183bc8)
+	/usr/lib/golang/src/crypto/tls/conn.go:595 +0xe0
+crypto/tls.(*Conn).Read(0xc4201d4a80, 0xc42057b000, 0x1000, 0x1000, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/crypto/tls/conn.go:1156 +0x100
+bufio.(*Reader).Read(0xc4203a4fc0, 0xc4203343b8, 0x9, 0x9, 0x28, 0xc420231ce0, 0x0)
+	/usr/lib/golang/src/bufio/bufio.go:216 +0x238
+io.ReadAtLeast(0x6b65c0, 0xc4203a4fc0, 0xc4203343b8, 0x9, 0x9, 0x9, 0x699978, 0xc420183cf8, 0xc4201b5140)
+	/usr/lib/golang/src/io/io.go:309 +0x86
+io.ReadFull(0x6b65c0, 0xc4203a4fc0, 0xc4203343b8, 0x9, 0x9, 0xc4201faa28, 0xc4205ac000, 0xac7)
+	/usr/lib/golang/src/io/io.go:327 +0x58
+net/http.http2readFrameHeader(0xc4203343b8, 0x9, 0x9, 0x6b65c0, 0xc4203a4fc0, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:1517 +0x7b
+net/http.(*http2Framer).ReadFrame(0xc420334380, 0xc420231ce0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:1775 +0xa4
+net/http.(*http2clientConnReadLoop).run(0xc420183fb8, 0x699420, 0xc420498fb8)
+	/usr/lib/golang/src/net/http/h2_bundle.go:8028 +0x90
+net/http.(*http2ClientConn).readLoop(0xc420578000)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7956 +0x68
+created by net/http.(*http2Transport).newClientConn
+	/usr/lib/golang/src/net/http/h2_bundle.go:7143 +0x65c
+
+goroutine 83 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420336400, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420336400, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420336400, 0xc420183888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420336400, 0xc420340960, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420336400, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420336400, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4203380d0, 0xf8, 0xc420183c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420336400, 0x0, 0x0, 0x0, 0xc4203380d0, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420336400, 0xc420340960, 0x2d, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420340960, 0x2d, 0x4, 0xc420438580, 0xc4202767e0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420340960, 0x2d, 0x2d, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162d80)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 30 [select]:
+net/http.(*Transport).getConn(0x7ed440, 0xc4200db9e0, 0x0, 0xc420204580, 0x5, 0xc4203e0b00, 0x1c, 0x0, 0x0, 0x400)
+	/usr/lib/golang/src/net/http/transport.go:962 +0x558
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420392700, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:409 +0x632
+net/http.send(0xc420392700, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc42000e190, 0xf8, 0xc420063c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420392700, 0x0, 0x0, 0x0, 0xc42000e190, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420392700, 0xc420204580, 0x3c, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420204580, 0x3c, 0x1c, 0xc4203cc2e0, 0xc42036abd0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420204580, 0x3c, 0x3c, 0x8, 0xc4201ae300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420166b00)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 47 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420336300, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420336300, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420336300, 0xc420183888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420336300, 0xc4202da240, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420336300, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420336300, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4203380a8, 0xf8, 0xc420183c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420336300, 0x0, 0x0, 0x0, 0xc4203380a8, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420336300, 0xc4202da240, 0x31, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4202da240, 0x31, 0x4, 0xc4204041a0, 0xc420276770)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4202da240, 0x31, 0x31, 0x2, 0x5)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420166580)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 82 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420392500, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420392500, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420392500, 0xc4204c7888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420392500, 0xc420204340, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420392500, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420392500, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc42000e120, 0xf8, 0xc4204c7c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420392500, 0x0, 0x0, 0x0, 0xc42000e120, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420392500, 0xc420204340, 0x32, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420204340, 0x32, 0x4, 0xc420437ac0, 0xc42036aa80)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420204340, 0x32, 0x32, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162d00)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 63 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420392600, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420392600, 0x6b6b00, 0xc4203e07c0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420392600, 0xc420063888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420392600, 0xc420204400, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420392600, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420392600, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc42000e158, 0xf8, 0xc420063c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420392600, 0x0, 0x0, 0x0, 0xc42000e158, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420392600, 0xc420204400, 0x3e, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420204400, 0x3e, 0x4, 0xc420452990, 0xc42036aaf0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420204400, 0x3e, 0x3e, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420162f00)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 104 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420336600, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420336600, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420336600, 0xc420184888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420336600, 0xc420340b40, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420336600, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420336600, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc420338120, 0xf8, 0xc420184c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420336600, 0x0, 0x0, 0x0, 0xc420338120, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420336600, 0xc420340b40, 0x2d, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420340b40, 0x2d, 0x4, 0xc4203dc030, 0xc420276bd0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420340b40, 0x2d, 0x2d, 0x8, 0xc420010300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420167000)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 105 [chan receive]:
+net/http.(*persistConn).addTLS(0xc42016e5a0, 0xc4203e14c0, 0xd, 0x0, 0xc4203e14ce, 0x3)
+	/usr/lib/golang/src/net/http/transport.go:1074 +0x1c8
+net/http.(*Transport).dialConn(0x7ed440, 0x6b9080, 0xc4200ac010, 0x0, 0xc4201d0ab0, 0x5, 0xc4203e14c0, 0x11, 0x61, 0x61, ...)
+	/usr/lib/golang/src/net/http/transport.go:1153 +0x14c3
+net/http.(*Transport).getConn.func4(0x7ed440, 0x6b9080, 0xc4200ac010, 0xc4205882a0, 0xc4203ab0e0)
+	/usr/lib/golang/src/net/http/transport.go:957 +0x78
+created by net/http.(*Transport).getConn
+	/usr/lib/golang/src/net/http/transport.go:956 +0x363
+
+goroutine 64 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420392800, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420392800, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420392800, 0xc4204c7888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420392800, 0xc4201d0a20, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420392800, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420392800, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc42000e1c8, 0xf8, 0xc4204c7c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420392800, 0x0, 0x0, 0x0, 0xc42000e1c8, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420392800, 0xc4201d0a20, 0x2e, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4201d0a20, 0x2e, 0x4, 0xc4203e0460, 0xc42036ac40)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4201d0a20, 0x2e, 0x2e, 0x8, 0xc420010300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420366600)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 31 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420392900, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420392900, 0xc420187800, 0x443aff, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420392900, 0xc420187888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420392900, 0xc420204600, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420392900, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420392900, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc42000e1f0, 0xf8, 0xc420187c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420392900, 0x0, 0x0, 0x0, 0xc42000e1f0, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420392900, 0xc420204600, 0x34, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420204600, 0x34, 0x4, 0xc4203e0480, 0xc42036acb0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420204600, 0x34, 0x34, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420366680)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 65 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc42016aa00, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc42016aa00, 0xc420182800, 0x443aff, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc42016aa00, 0xc420182888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc42016aa00, 0xc4203ccec0, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc42016aa00, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc42016aa00, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4200b0198, 0xf8, 0xc420182c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc42016aa00, 0x0, 0x0, 0x0, 0xc4200b0198, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc42016aa00, 0xc4203ccec0, 0x37, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4203ccec0, 0x37, 0x4, 0xc4203bfe00, 0xc4202e1730)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4203ccec0, 0x37, 0x37, 0x0, 0xc4201fb300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420167280)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 84 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420336700, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420336700, 0x0, 0x0, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420336700, 0xc420184888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420336700, 0xc4202da480, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420336700, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420336700, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc420338148, 0xf8, 0xc420184c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420336700, 0x0, 0x0, 0x0, 0xc420338148, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420336700, 0xc4202da480, 0x3e, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4202da480, 0x3e, 0x4, 0xc4200aeab0, 0xc420276c40)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4202da480, 0x3e, 0x3e, 0x0, 0xc4201fb300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420167480)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 32 [select]:
+net/http.(*Transport).getConn(0x7ed440, 0xc420588270, 0x0, 0xc4201d0ab0, 0x5, 0xc4203e14c0, 0x11, 0x0, 0x0, 0x43baeb)
+	/usr/lib/golang/src/net/http/transport.go:962 +0x558
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420392a00, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:409 +0x632
+net/http.send(0xc420392a00, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc42000e218, 0xf8, 0xc420063c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420392a00, 0x0, 0x0, 0x0, 0xc42000e218, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420392a00, 0xc4201d0ab0, 0x2b, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc4201d0ab0, 0x2b, 0x16, 0xc4200aeaf5, 0xc42036ae70)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc4201d0ab0, 0x2b, 0x2b, 0x0, 0xc4201fb300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420167500)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 131 [IO wait]:
+internal/poll.runtime_pollWait(0x7fbd32aa5e30, 0x72, 0xc420184918)
+	/usr/lib/golang/src/runtime/netpoll.go:173 +0x57
+internal/poll.(*pollDesc).wait(0xc42031cd18, 0x72, 0xffffffffffffff00, 0x6b72c0, 0x7bc3e8)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:85 +0x9b
+internal/poll.(*pollDesc).waitRead(0xc42031cd18, 0xc420209c00, 0x400, 0x400)
+	/usr/lib/golang/src/internal/poll/fd_poll_runtime.go:90 +0x3d
+internal/poll.(*FD).Read(0xc42031cd00, 0xc420209c00, 0x400, 0x400, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/internal/poll/fd_unix.go:157 +0x17d
+net.(*netFD).Read(0xc42031cd00, 0xc420209c00, 0x400, 0x400, 0xc420209c00, 0x0, 0x400)
+	/usr/lib/golang/src/net/fd_unix.go:202 +0x4f
+net.(*conn).Read(0xc4201ba200, 0xc420209c00, 0x400, 0x400, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/net.go:176 +0x6a
+crypto/tls.(*block).readFromUntil(0xc420569590, 0x7fbd32a21040, 0xc4201ba200, 0x5, 0xc4201ba200, 0xc42031cd18)
+	/usr/lib/golang/src/crypto/tls/conn.go:493 +0x96
+crypto/tls.(*Conn).readRecord(0xc42055a380, 0x699916, 0xc420184c80, 0xb5)
+	/usr/lib/golang/src/crypto/tls/conn.go:595 +0xe0
+crypto/tls.(*Conn).readHandshake(0xc42055a380, 0xc420026216, 0xc420026240, 0xb5, 0xb5)
+	/usr/lib/golang/src/crypto/tls/conn.go:965 +0x8d
+crypto/tls.(*clientHandshakeState).handshake(0xc420184e70, 0xc4200fd2c0, 0x0)
+	/usr/lib/golang/src/crypto/tls/handshake_client.go:191 +0xaa
+crypto/tls.(*Conn).clientHandshake(0xc42055a380, 0x699978, 0xc42055a4a0)
+	/usr/lib/golang/src/crypto/tls/handshake_client.go:168 +0x38c
+crypto/tls.(*Conn).Handshake(0xc42055a380, 0x0, 0x0)
+	/usr/lib/golang/src/crypto/tls/conn.go:1329 +0x185
+net/http.(*persistConn).addTLS.func2(0x0, 0xc42055a380, 0xc42016c4b0, 0xc420572c60)
+	/usr/lib/golang/src/net/http/transport.go:1068 +0x42
+created by net/http.(*persistConn).addTLS
+	/usr/lib/golang/src/net/http/transport.go:1064 +0x19f
+
+goroutine 130 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420336800, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420336800, 0x6b6b00, 0xc420422b80, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420336800, 0xc420063888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420336800, 0xc420340d20, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420336800, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420336800, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc420338190, 0xf8, 0xc420063c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420336800, 0x0, 0x0, 0x0, 0xc420338190, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420336800, 0xc420340d20, 0x2d, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420340d20, 0x2d, 0x4, 0xc4203dc530, 0xc420276e00)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420340d20, 0x2d, 0x2d, 0x3f7a3c4900000008, 0xc420010300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420167880)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 116 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203121c0, 0xc420322b00, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322b00, 0xc420439e00, 0xf, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322b00, 0xc420184888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322b00, 0xc420453140, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322b00, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322b00, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba1f0, 0xf8, 0xc420184c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322b00, 0x0, 0x0, 0x0, 0xc4201ba1f0, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322b00, 0xc420453140, 0x24, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420453140, 0x24, 0x0, 0xc420439be0, 0xc420592380)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420453140, 0x24, 0x24, 0x3f7a3c4900000008, 0xc420010300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420163080)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 114 [select]:
+net/http.(*persistConn).writeLoop(0xc42022a000)
+	/usr/lib/golang/src/net/http/transport.go:1822 +0x14b
+created by net/http.(*Transport).dialConn
+	/usr/lib/golang/src/net/http/transport.go:1238 +0x97f
+
+goroutine 109 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420322900, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322900, 0xc4204c6800, 0x443aff, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322900, 0xc4204c6888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322900, 0xc420452f00, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322900, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322900, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba1a0, 0xf8, 0xc4204c6c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322900, 0x0, 0x0, 0x0, 0xc4201ba1a0, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322900, 0xc420452f00, 0x30, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420452f00, 0x30, 0x4, 0xc4203e04e0, 0xc420592070)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420452f00, 0x30, 0x30, 0x8, 0xc4201ae8c0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420366700)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 110 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420322a00, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322a00, 0xc420439e00, 0xf, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322a00, 0xc420184888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322a00, 0xc420452f30, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322a00, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322a00, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba1c8, 0xf8, 0xc420184c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322a00, 0x0, 0x0, 0x0, 0xc4201ba1c8, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322a00, 0xc420452f30, 0x2e, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420452f30, 0x2e, 0x4, 0xc4203a65c0, 0xc4205920e0)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420452f30, 0x2e, 0x2e, 0x3f7a3c4900000008, 0xc420010300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420167780)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 85 [select]:
+net/http.(*http2ClientConn).roundTrip(0xc4203b2a80, 0xc420322c00, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7442 +0x844
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420322c00, 0xc4204c6800, 0x443aff, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420322c00, 0xc4204c6888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420322c00, 0xc42035b640, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420322c00, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420322c00, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4201ba220, 0xf8, 0xc4204c6c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420322c00, 0x0, 0x0, 0x0, 0xc4201ba220, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420322c00, 0xc42035b640, 0x37, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc42035b640, 0x37, 0x4, 0xc42038d6a0, 0xc420592460)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc42035b640, 0x37, 0x37, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420163100)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+
+goroutine 134 [runnable]:
+vendor/golang_org/x/net/http2/hpack.(*headerFieldTable).search(0xc4200a66c0, 0x687f6e, 0xf, 0x681f9f, 0x4, 0x0, 0xc420314093, 0xc4203ccd80)
+	/usr/lib/golang/src/vendor/golang_org/x/net/http2/hpack/tables.go:109 +0x63
+vendor/golang_org/x/net/http2/hpack.(*Encoder).searchTable(0xc420167380, 0x687f6e, 0xf, 0x681f9f, 0x4, 0x0, 0x0, 0x1)
+	/usr/lib/golang/src/vendor/golang_org/x/net/http2/hpack/encode.go:92 +0x5d
+vendor/golang_org/x/net/http2/hpack.(*Encoder).WriteField(0xc420167380, 0x687f6e, 0xf, 0x681f9f, 0x4, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/vendor/golang_org/x/net/http2/hpack/encode.go:62 +0xfa
+net/http.(*http2ClientConn).writeHeader(0xc4203121c0, 0x687f6e, 0xf, 0x681f9f, 0x4)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7898 +0xe2
+net/http.(*http2ClientConn).encodeHeaders.func3(0x687f6e, 0xf, 0x681f9f, 0x4)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7840 +0x74
+net/http.(*http2ClientConn).encodeHeaders.func1(0xc42043e5e0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7817 +0x594
+net/http.(*http2ClientConn).encodeHeaders(0xc4203121c0, 0xc420336900, 0x1, 0x0, 0x0, 0x0, 0x38, 0x665960, 0x1, 0x10, ...)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7839 +0x5fc
+net/http.(*http2ClientConn).roundTrip(0xc4203121c0, 0xc420336900, 0x0, 0x0, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/h2_bundle.go:7369 +0x1d3
+net/http.(*http2Transport).RoundTripOpt(0xc42016c000, 0xc420336900, 0x6b6b00, 0xc420422b80, 0x40b480, 0x6827a5)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6929 +0x150
+net/http.(*http2Transport).RoundTrip(0xc42016c000, 0xc420336900, 0xc420063888, 0x0, 0xc4200ac010)
+	/usr/lib/golang/src/net/http/h2_bundle.go:6891 +0x3a
+net/http.http2noDialH2RoundTripper.RoundTrip(0xc42016c000, 0xc420336900, 0xc420341890, 0x5, 0xc42016e088)
+	/usr/lib/golang/src/net/http/h2_bundle.go:991 +0x39
+net/http.(*Transport).RoundTrip(0x7ed440, 0xc420336900, 0x7ed440, 0x0, 0x0)
+	/usr/lib/golang/src/net/http/transport.go:380 +0xc36
+net/http.send(0xc420336900, 0x6b6880, 0x7ed440, 0x0, 0x0, 0x0, 0xc4203381b8, 0xf8, 0xc420063c78, 0x1)
+	/usr/lib/golang/src/net/http/client.go:252 +0x185
+net/http.(*Client).send(0x7f2080, 0xc420336900, 0x0, 0x0, 0x0, 0xc4203381b8, 0x0, 0x1, 0x411898)
+	/usr/lib/golang/src/net/http/client.go:176 +0xfa
+net/http.(*Client).Do(0x7f2080, 0xc420336900, 0xc420341890, 0x22, 0x0)
+	/usr/lib/golang/src/net/http/client.go:615 +0x28d
+net/http.(*Client).Get(0x7f2080, 0xc420341890, 0x22, 0x0, 0xc420439c10, 0xc420277030)
+	/usr/lib/golang/src/net/http/client.go:396 +0x9d
+net/http.Get(0xc420341890, 0x22, 0x22, 0x3f7a3c4900000008, 0xc420010300)
+	/usr/lib/golang/src/net/http/client.go:370 +0x41
+main.(*Scraper).visit(0xc42012c2c0, 0xc420163180)
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:89 +0x5b
+created by main.(*Scraper).Run.func1
+	/home/rodrigodiez/src/github.com/rodrigodiez/go-exercises/01-concurrent-web-scrapper/main.go:80 +0x84
+exit status 2

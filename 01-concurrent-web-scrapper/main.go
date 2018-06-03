@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"sync"
 	"time"
 
 	"golang.org/x/net/html"
@@ -56,33 +57,30 @@ func main() {
 }
 
 type Scraper struct {
-	visitedURLs    map[string]bool
+	uniqueURLs     map[string]bool
+	mutex          *sync.Mutex
 	pendingURLs    chan *url.URL
 	discoveredURLs chan *url.URL
 }
 
 func (s *Scraper) Run(ctx context.Context, URL *url.URL, rate time.Duration) chan *url.URL {
-	s.visitedURLs = make(map[string]bool)
+	s.uniqueURLs = make(map[string]bool)
 	s.pendingURLs = make(chan *url.URL, 10)
 	s.discoveredURLs = make(chan *url.URL)
+	s.mutex = &sync.Mutex{}
 	throttle := time.Tick(rate)
 
 	s.pendingURLs <- URL
 
 	go func() {
-		for pending := range s.pendingURLs {
-
+		for {
 			select {
 			case <-ctx.Done():
 				fmt.Println("scraper: Context is done, returning...")
 				return
-			default:
-				if _, visited := s.visitedURLs[pending.String()]; !visited {
-					s.visitedURLs[pending.String()] = true
-					s.discoveredURLs <- pending
-					<-throttle
-					go s.visit(pending)
-				}
+			case pending := <-s.pendingURLs:
+				<-throttle
+				go s.visit(pending)
 			}
 		}
 	}()
@@ -123,7 +121,13 @@ tokens:
 						}
 
 						if linkURL.Scheme == "http" || linkURL.Scheme == "https" {
-							s.pendingURLs <- linkURL
+							s.mutex.Lock()
+							if _, exists := s.uniqueURLs[linkURL.String()]; !exists {
+								s.uniqueURLs[linkURL.String()] = true
+								s.pendingURLs <- linkURL
+								s.discoveredURLs <- linkURL
+							}
+							s.mutex.Unlock()
 						}
 						continue tokens
 					}
