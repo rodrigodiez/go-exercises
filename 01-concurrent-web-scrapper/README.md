@@ -1,6 +1,7 @@
 #01-concurrent-web-scrapper
 
 # Acceptance criteria
+- Concurrency is encapsulated in the scraper
 - Scraper finds all links in a given URL
 - Scraper subsequentenly visits found links
 - Scraper only visits each URL once

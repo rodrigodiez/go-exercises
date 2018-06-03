@@ -15,67 +15,82 @@ import (
 
 func main() {
 	var (
-		baseURL        string
-		concurrentCons int
-		rate           time.Duration
-		URL            *url.URL
-		foundURLS      chan *url.URL
-		visitedURLS    map[string]bool
-		s              *scraper
-		timeLimit      time.Duration
+		startURL  string
+		rate      time.Duration
+		timeLimit time.Duration
 	)
 
-	flag.StringVar(&baseURL, "url", "", "URL to scrap")
-	flag.IntVar(&concurrentCons, "concurrent", 10, "concurrent requests")
+	flag.StringVar(&startURL, "url", "", "URL to scrap")
 	flag.DurationVar(&rate, "rate", 100*time.Millisecond, "time between requests")
 	flag.DurationVar(&timeLimit, "time-limit", 10*time.Second, "time limit")
 
 	flag.Parse()
 
-	if baseURL == "" {
+	if startURL == "" {
 		flag.Usage()
 		fmt.Println("url is required")
 		os.Exit(1)
 	}
 
-	foundURLS = make(chan *url.URL, concurrentCons)
-	visitedURLS = make(map[string]bool)
-	s = &scraper{urls: foundURLS}
+	s := &Scraper{}
 
-	URL, err := url.Parse(baseURL)
+	URL, err := url.Parse(startURL)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	go s.Run(URL)
-
-	throttle := time.Tick(rate)
 	ctx, cancel := context.WithTimeout(context.Background(), timeLimit)
 	defer cancel()
+	URLs := s.Run(ctx, URL, rate)
 
-	for URL = range foundURLS {
+	for {
 		select {
 		case <-ctx.Done():
-			fmt.Printf("Found %d URLs\n", len(visitedURLS))
+			fmt.Println("main: Context is done, returning...")
 			return
-		default:
-		}
-
-		if _, exists := visitedURLS[URL.String()]; !exists {
-			<-throttle
-			visitedURLS[URL.String()] = true
+		case URL = <-URLs:
 			fmt.Println(URL.String())
-			go s.Run(URL)
 		}
-
 	}
+
 }
 
-type scraper struct {
-	urls chan *url.URL
+type Scraper struct {
+	visitedURLs    map[string]bool
+	pendingURLs    chan *url.URL
+	discoveredURLs chan *url.URL
 }
 
-func (s *scraper) Run(URL *url.URL) {
+func (s *Scraper) Run(ctx context.Context, URL *url.URL, rate time.Duration) chan *url.URL {
+	s.visitedURLs = make(map[string]bool)
+	s.pendingURLs = make(chan *url.URL, 10)
+	s.discoveredURLs = make(chan *url.URL)
+	throttle := time.Tick(rate)
+
+	s.pendingURLs <- URL
+
+	go func() {
+		for pending := range s.pendingURLs {
+
+			select {
+			case <-ctx.Done():
+				fmt.Println("scraper: Context is done, returning...")
+				return
+			default:
+				if _, visited := s.visitedURLs[pending.String()]; !visited {
+					s.visitedURLs[pending.String()] = true
+					s.discoveredURLs <- pending
+					<-throttle
+					go s.visit(pending)
+				}
+			}
+		}
+	}()
+
+	return s.discoveredURLs
+}
+
+func (s *Scraper) visit(URL *url.URL) {
 	resp, err := http.Get(URL.String())
 
 	if err != nil {
@@ -108,7 +123,7 @@ tokens:
 						}
 
 						if linkURL.Scheme == "http" || linkURL.Scheme == "https" {
-							s.urls <- linkURL
+							s.pendingURLs <- linkURL
 						}
 						continue tokens
 					}
